@@ -164,9 +164,25 @@ module.exports = function(grunt) {
 			src: ['test/mocha/**/*.js']
 		},
 		env: {
+			prod : {
+				src : '.env',
+				options : {
+					add : {
+						NODE_ENV : 'production',
+						MONGOHQ_URL : 'mongodb://localhost:27017'
+					},
+					replace : {
+						NODE_ENV : 'production'
+					}
+				}
+			},
 			dev : {
 				src : '.env',
 				options : {
+					add : {
+						NODE_ENV : 'development',
+						MONGOHQ_URL : 'mongodb://localhost:27017'
+					},
 					replace : {
 						NODE_ENV : 'development'
 					}
@@ -175,16 +191,24 @@ module.exports = function(grunt) {
 			n2o : {
 				src : '.env',
 				options : {
+					add : {
+						NODE_ENV : 'n2o',
+						MONGOHQ_URL : 'mongodb://localhost:27017'
+					},
 					replace : {
-						NODE_ENV : 'n2o'
+						NODE_ENV : 'n2o',
 					}
 				}
 			},
 			test : {
 				src : '.env',
 				options : {
+					add : {
+						NODE_ENV : 'test',
+						MONGOHQ_URL : 'mongodb://test_user:test_pass@localhost:27017/test_db'
+					},
 					replace : {
-						NODE_ENV : 'test'
+						NODE_ENV : 'test',
 					}
 				}
 			}
@@ -223,6 +247,7 @@ module.exports = function(grunt) {
 
 	//Default task(s).
 	grunt.registerTask('default', [
+		'env:prod',
 		'less',
 		'createDefaultTemplate',
 		'jst',
