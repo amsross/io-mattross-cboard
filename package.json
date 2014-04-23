@@ -1,0 +1,56 @@
+{
+  "name": "io-mattross-cboard",
+  "version": "0.0.1-a",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/grunt-cli/bin/grunt",
+    "test": "node node_modules/grunt-cli/bin/grunt test",
+    "postinstall": "./node_modules/bower/bin/bower install;./node_modules/grunt-cli/bin/grunt"
+  },
+  "engines": {
+    "node": "0.10.25"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amsross/io-mattross-cboard"
+  },
+  "author": "Matt Ross <matt@mattross.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amsross/io-mattross-cboard/issues"
+  },
+  "homepage": "https://github.com/amsross/io-mattross-cboard",
+  "dependencies": {
+    "body-parser": "^1.0.2",
+    "bower": "^1.3.2",
+    "cookie-parser": "^1.0.1",
+    "express": "^4.0.0",
+    "express-session": "^1.0.3",
+    "grunt": "^0.4.4",
+    "grunt-cli": "^0.1.13",
+    "grunt-concurrent": "^0.5.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-imagemin": "^0.6.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jst": "^0.6.0",
+    "grunt-contrib-less": "^0.11.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-env": "^0.4.1",
+    "grunt-nodemon": "^0.2.1",
+    "jade": "^1.3.1",
+    "jpegtran-bin": "^0.2.6",
+    "marked": "^0.3.2",
+    "moment": "^2.6.0",
+    "mongoose": "^3.8.8",
+    "newrelic": "^1.5.1",
+    "optipng-bin": "^0.3.3",
+    "static-favicon": "^1.0.2",
+    "underscore": "^1.6.0"
+  },
+  "devDependencies": {
+    "grunt-mocha-test": "^0.10.2",
+    "mocha": "^1.18.2",
+    "should": "^3.3.1"
+  }
+}

@@ -1,0 +1,65 @@
+@import 'pureoverrides.less';
+
+.pull-left {float: left;}
+.pull-right {float: right;}
+
+.text-left {text-align: left;}
+.text-center {text-align: center;}
+.text-right {text-align: right;}
+
+body {
+	background-color: #f8f8f8;
+}
+
+#header {
+	.pure-menu {
+		> ul {
+			width: 100%;
+		}
+	}
+}
+
+#canvas {
+	line-height: 0;
+	padding: 0;
+	canvas {
+		background-color: #fff;
+		width: 100%;
+	}
+}
+
+#players {
+	padding: 0;
+	.player-add {
+		display: block;
+	}
+	ul.players {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			list-style: none;
+			margin-bottom: 15px;
+			padding: 0;
+			.number {
+				background-color: #eee;
+				border-radius: 100%;
+				border: 1px solid #999;
+				display: block;
+				float: left;
+				font-size: 2rem;
+				font-style: italic;
+				height: 2em;
+				line-height: 2em;
+				margin-right: 0.25em;
+				text-align: center;
+				width: 2em;
+			}
+			.name {
+			}
+		}
+	}
+}
+
+@media (max-width: 767px) {}
+@media (min-width: 768px) {}

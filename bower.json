@@ -1,0 +1,22 @@
+{
+  "name": "io-mattross-cboard",
+  "version": "0.0.1",
+  "authors": [
+    "Matt Ross"
+  ],
+  "main": "server.js",
+  "keywords": [],
+  "license": "MIT",
+  "homepage": "http://cboard.mattross.io/",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "underscore": "~1.6.0",
+    "jquery.slimscroll": "amsross/jQuery-slimScroll#master",
+    "backbone.marionette": "~1.8.2",
+    "pure": "~0.4.2",
+    "font-awesome": "~4.0.3",
+    "backbone.localStorage": "~1.1.7",
+    "Faker": "~0.7.0"
+  }
+}

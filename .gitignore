@@ -1,0 +1,12 @@
+*.log
+*_log
+*~
+.env
+.ftppass
+.sass-cache
+.sublime-*
+.tmp
+bower_components
+node_modules
+node_modules
+Thumbs.db
