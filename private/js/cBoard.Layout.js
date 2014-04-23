@@ -37,8 +37,9 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			var that = this;
 
 			that.canvasData = {
-				fillStyle: '#fff',
-				fillColor: '#000000',
+				fillStyle: '#FFF',
+				fillColor: '#FFF',
+				strokeStyle: '#000',
 				radius: 1
 			};
 		},
@@ -46,8 +47,6 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 		onShow: function() {
 
 			var that = this;
-
-			that.$el.height(window.innerHeight - cBoard.header.$el.height() - 3);
 
 			that.canvasLoad();
 			that.canvasClear();
@@ -60,21 +59,21 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			that.canvasData.canvas = that.$el[0];
 			that.canvasData.objContainer = that.$el.parent();
 
-			that.canvasData.canvas.width = that.canvasData.objContainer.innerWidth();
-			that.canvasData.canvas.height = window.innerHeight - cBoard.header.$el.height() - 3;
-
 			that.canvasData.ctx = that.canvasData.canvas.getContext('2d');
 			that.canvasData.ctx.fillColor = that.canvasData.fillColor;
 			that.canvasData.ctx.fillStyle = that.canvasData.fillStyle;
 			that.canvasData.ctx.font = (that.canvasData.radius * 16) + 'px Arial';
 			that.canvasData.ctx.lineCap = 'round';
 			that.canvasData.ctx.lineWidth = that.canvasData.radius;
-			that.canvasData.ctx.strokeStyle = that.canvasData.fillColor;
+			that.canvasData.ctx.strokeStyle = that.canvasData.strokeStyle;
 		},
 
 		canvasClear: function() {
 
 			var that = this;
+
+			that.canvasData.canvas.width = that.canvasData.objContainer.innerWidth();
+			that.canvasData.canvas.height = window.innerHeight - cBoard.header.$el.height() - 3;
 
 			that.canvasData.ctx.fillRect(0, 0, that.canvasData.canvas.width, that.canvasData.canvas.height);
 
