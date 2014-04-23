@@ -17,13 +17,13 @@ module.exports = function () {
 
 	// production only
 	if ('production' === app.get('env')) {
-		console.log('env: production');
+		console.log('env: ' + app.get('env'));
 		require('newrelic');
 	}
 
 	// development only
 	if ('production' !== app.get('env')) {
-		// app.use(express.errorHandler());
+		console.log('env: ' + app.get('env'));
 		app.use(function(req, res, next){
 			console.log('%s %s', req.method, req.url);
 			next();
