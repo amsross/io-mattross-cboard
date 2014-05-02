@@ -27,7 +27,6 @@ cBoard.module('PlayerList', function (PlayerList, cBoard, Backbone, Marionette, 
 			this.showHeader();
 			this.showCanvas();
 			this.showPlayerList(this.playerList);
-			this.playerList.fetch();
 		},
 
 		showHeader: function () {

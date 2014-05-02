@@ -43,8 +43,10 @@ body {
 
 #players {
 	padding: 0;
-	.player-add {
-		display: block;
+	.pure-button {
+		&[class*="player-"] {
+			display: block;
+		}
 	}
 	ul.players {
 		list-style: none;

@@ -19,7 +19,6 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		},
 
 		events: {
-			'click .destroy': 'destroy',
 			'click .number': 'destroy',
 		},
 
@@ -27,6 +26,48 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 
 		destroy: function () {
 			this.model.destroy();
+		}
+	});
+
+	Views.ItemEdit = Marionette.ItemView.extend({
+		tagName: 'form',
+		className: 'clearfix pure-u-1 pure-form',
+		template: JST['private/templates/playerItemEdit.ejs'],
+
+		ui: {
+			number: '.number',
+			name: '.name',
+		},
+
+		events: {
+			'click .player-queue': 'queue',
+			'click .player-cancel': 'destroy',
+		},
+
+		modelEvents: {},
+
+		queue: function () {
+
+			var that = this;
+
+			that.model.collection.add(that.model);
+
+			that.model.save();
+
+			cBoard.players.show(new cBoard.PlayerList.Views.ListView({
+				collection: that.model.collection
+			}));
+		},
+
+		destroy: function () {
+
+			var that = this;
+
+			that.model.destroy();
+
+			cBoard.players.show(new cBoard.PlayerList.Views.ListView({
+				collection: new cBoard.Players.PlayerList(that.model.collection)
+			}));
 		}
 	});
 
@@ -56,19 +97,27 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 
 			var that = this;
 
+			that.collection.fetch();
+
 			that.$('.players').slimScroll({
 				height: window.innerHeight - that.ui.playerAdd.innerHeight() - cBoard.header.$el.innerHeight() - 3 + 'px'
 			});
 		},
 
 		playerAdd: function () {
+			console.log('playerAdd');
 
-			var that = this;
+			var that = this,
+				player = new cBoard.Players.Player({
+					'number': Math.floor(Math.random() * (150 - 1) + 1),
+					'name': Faker.Name.findName(),
+				}, {
+					collection: that.collection
+				})
+				;
 
-			that.collection.add({
-				'number': Math.floor(Math.random() * (150 - 1) + 1),
-				'name': Faker.Name.findName()
-			}, {at: 0});
+			cBoard.players.close();
+			cBoard.players.show(new cBoard.PlayerList.Views.ItemEdit({model: player, parent: that}));
 		},
 
 		playerSave: function (player) {
