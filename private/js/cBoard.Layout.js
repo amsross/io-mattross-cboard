@@ -83,12 +83,18 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 
 			that.img.onload	= function() {
 
-				var iImgWidth = that.canvasData.canvas.width;
-				var iImgHeight = that.canvasData.canvas.height;
+				var
+					iImgHeight = that.canvasData.canvas.height,
+					iImgWidth = that.canvasData.canvas.width,
+					offsetLeft = 0,
+					offsetTop = 0,
+					resize_by_width = false,
+					resize_ratio = 1
+					;
 
-				if ( that.img.width >  that.canvasData.canvas.width ||  that.img.height > that.canvasData.canvas.height ) {
-					var resize_by_width = ((that.img.width / that.canvasData.canvas.width) > (that.img.height / that.canvasData.canvas.height));
-					var resize_ratio = (resize_by_width ? that.canvasData.canvas.width / that.img.width : that.canvasData.canvas.height / that.img.height);
+				if ( that.img.width > that.canvasData.canvas.width || that.img.height > that.canvasData.canvas.height ) {
+					resize_by_width = ((that.img.width / that.canvasData.canvas.width) > (that.img.height / that.canvasData.canvas.height));
+					resize_ratio = (resize_by_width ? that.canvasData.canvas.width / that.img.width : that.canvasData.canvas.height / that.img.height);
 
 					iImgWidth = that.img.width * resize_ratio;
 					iImgHeight = that.img.height * resize_ratio;
@@ -98,11 +104,11 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 				}
 
 				if (that.canvasData.canvas.height > iImgHeight) {
-					that.canvasData.canvas.height = that.canvasData.canvas.height = iImgHeight;
+					that.canvasData.canvas.height = iImgHeight;
 				}
 
-				var offsetLeft = (that.canvasData.canvas.width - iImgWidth) / 2;
-				var offsetTop = (that.canvasData.canvas.height - iImgHeight) / 2;
+				offsetLeft = (that.canvasData.canvas.width - iImgWidth) / 2;
+				offsetTop = (that.canvasData.canvas.height - iImgHeight) / 2;
 				that.canvasData.ctx.drawImage(that.img, offsetLeft, offsetTop, iImgWidth, iImgHeight );
 
 				delete that.img;
