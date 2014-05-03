@@ -90,22 +90,22 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		},
 
 		collectionEvents: {
-			'add': 'playerSave'
 		},
 
 		onShow: function () {
 
-			var that = this;
+			var that = this,
+				scrollHeight = window.innerHeight - that.ui.playerAdd.innerHeight() - cBoard.header.$el.innerHeight() - 4
+				;
 
 			that.collection.fetch();
 
 			that.$('.players').slimScroll({
-				height: window.innerHeight - that.ui.playerAdd.innerHeight() - cBoard.header.$el.innerHeight() - 3 + 'px'
+				height: scrollHeight
 			});
 		},
 
 		playerAdd: function () {
-			console.log('playerAdd');
 
 			var that = this,
 				player = new cBoard.Players.Player({
@@ -118,10 +118,6 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 
 			cBoard.players.close();
 			cBoard.players.show(new cBoard.PlayerList.Views.ItemEdit({model: player, parent: that}));
-		},
-
-		playerSave: function (player) {
-			player.save();
 		}
 	});
 });
