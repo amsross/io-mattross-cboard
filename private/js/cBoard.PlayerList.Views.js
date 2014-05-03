@@ -19,16 +19,21 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		},
 
 		events: {
-			'click .name': 'edit',
+			'click': 'edit',
+			'click .number': 'attach',
 		},
 
 		modelEvents: {},
 
-		edit: function() {
+		edit: function(evt) {
 
 			var that = this;
 
 			cBoard.players.show(new cBoard.PlayerList.Views.ItemEdit({model: that.model}));
+		},
+
+		attach: function(evt) {
+			evt.stopPropagation();
 		}
 	});
 
