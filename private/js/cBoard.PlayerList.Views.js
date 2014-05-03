@@ -42,17 +42,25 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		events: {
 			'click .player-queue': 'queue',
 			'click .player-cancel': 'destroy',
+			'change .name': 'change',
+			'change .number': 'change',
 		},
 
-		modelEvents: {},
+		change: function() {
+
+			var that = this;
+
+			that.model.set({
+				'name': that.ui.name.val(),
+				'number': that.ui.number.val()
+			});
+		},
 
 		queue: function () {
 
 			var that = this;
 
 			that.model.collection.add(that.model);
-
-			that.model.save();
 
 			cBoard.players.show(new cBoard.PlayerList.Views.ListView({
 				collection: that.model.collection
