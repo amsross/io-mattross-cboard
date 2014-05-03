@@ -19,13 +19,16 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		},
 
 		events: {
-			'click .number': 'destroy',
+			'click .name': 'edit',
 		},
 
 		modelEvents: {},
 
-		destroy: function () {
-			this.model.destroy();
+		edit: function() {
+
+			var that = this;
+
+			cBoard.players.show(new cBoard.PlayerList.Views.ItemEdit({model: that.model}));
 		}
 	});
 
@@ -41,9 +44,41 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 
 		events: {
 			'click .player-queue': 'queue',
-			'click .player-cancel': 'destroy',
+			'click .player-destroy': 'destroy',
+			'blur .name': 'blur',
+			'blur .number': 'blur',
+			'focus .name': 'focus',
+			'focus .number': 'focus',
 			'change .name': 'change',
 			'change .number': 'change',
+		},
+		
+		blur: function(evt) {
+
+			var that = this,
+				target = evt.currentTarget,
+				$target = $(target)
+				;
+
+			if ($target.hasClass('name') && $target.val().length < 1) {
+				$target.val(that.model.get('name'));
+			} else if ($target.hasClass('number') && $target.val().length < 1) {
+				$target.val(that.model.get('number'));
+			}
+		},
+		
+		focus: function(evt) {
+
+			var that = this,
+				target = evt.currentTarget,
+				$target = $(target)
+				;
+
+			if ($target.hasClass('name') && $target.val() === that.model.get('name')) {
+				$target.val('');
+			} else if ($target.hasClass('number') && +$target.val() === +that.model.get('number')) {
+				$target.val('');
+			}
 		},
 
 		change: function() {
@@ -61,6 +96,8 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 			var that = this;
 
 			that.model.collection.add(that.model);
+
+			that.model.save();
 
 			cBoard.players.show(new cBoard.PlayerList.Views.ListView({
 				collection: that.model.collection
@@ -124,8 +161,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 				})
 				;
 
-			cBoard.players.close();
-			cBoard.players.show(new cBoard.PlayerList.Views.ItemEdit({model: player, parent: that}));
+			cBoard.players.show(new cBoard.PlayerList.Views.ItemEdit({model: player}));
 		}
 	});
 });
