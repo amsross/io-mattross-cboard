@@ -147,14 +147,6 @@ module.exports = function(grunt) {
 					}
 				}
 			},
-			n2o : {
-				src : '.env',
-				options : {
-					add : {
-						NODE_ENV : 'n2o'
-					}
-				}
-			},
 			test : {
 				src : '.env',
 				options : {
@@ -205,17 +197,6 @@ module.exports = function(grunt) {
 		'uglify',
 		'imagemin',
 		'copy:fonts'
-	]);
-
-	grunt.registerTask('n2o', [
-		'env:n2o',
-		'less',
-		'createDefaultTemplate',
-		'jst',
-		'uglify',
-		'imagemin',
-		'copy:fonts',
-		'watch'
 	]);
 
 	grunt.registerTask('dev', [
