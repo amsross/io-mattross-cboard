@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 				files: [
 					'Gruntfile.js',
 					'*.js',
+					'!*.swp',
 					'private/js/**'
 				],
 				tasks: ['jshint', 'uglify'],
@@ -32,12 +33,15 @@ module.exports = function(grunt) {
 					}
 				},
 				files: [
+					'index.html',
+					'!*.swp',
 					'private/templates/**/*.ejs'
 				],
 				tasks: ['jst']
 			},
 			less: {
 				files: [
+					'!*.swp',
 					'private/less/*.less'
 				],
 				tasks: ['less'],
