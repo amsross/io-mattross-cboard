@@ -92,6 +92,8 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		ui: {
 			number: '.number',
 			name: '.name',
+			queue: '.player-queue',
+			destroy: '.player-destroy',
 		},
 
 		events: {
@@ -145,15 +147,22 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 
 		queue: function () {
 
-			var that = this;
+			var that = this,
+				timeout = null
+				;
+			
+			that.$('input').blur();
 
-			that.model.collection.add(that.model);
+			timeout = window.setTimeout(function() {
 
-			that.model.save();
+				that.model.collection.add(that.model);
 
-			cBoard.players.show(new cBoard.PlayerList.Views.ListView({
-				collection: that.model.collection
-			}));
+				that.model.save();
+
+				cBoard.players.show(new cBoard.PlayerList.Views.ListView({
+					collection: that.model.collection
+				}));
+			}, 250);
 		},
 
 		destroy: function () {

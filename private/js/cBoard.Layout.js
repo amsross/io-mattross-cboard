@@ -149,6 +149,15 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 		canvasDrawer: {
 			isDrawing: false,
 			touchstart: function (coors, that) {
+				this.mousedown(coors, that);
+			},
+			touchmove: function (coors, that) {
+				this.mousemove(coors, that);
+			},
+			touchend: function (coors, that) {
+				this.mouseup(coors, that);
+			},
+			mousedown: function (coors, that) {
 				
 				if (cBoard.attaching) {
 					cBoard.attaching.$el.removeClass('attaching');
@@ -159,19 +168,10 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 					that.canvasData.objContainer.append(cBoard.attaching.marker.render().el);
 					cBoard.attaching = null;
 				} else {
-					this.mousedown(coors, that);
+					that.canvasData.ctx.beginPath();
+					that.canvasData.ctx.moveTo(coors.x, coors.y);
+					this.isDrawing = true;
 				}
-			},
-			touchmove: function (coors, that) {
-				this.mousemove(coors, that);
-			},
-			touchend: function (coors, that) {
-				this.mouseup(coors, that);
-			},
-			mousedown: function (coors, that) {
-				that.canvasData.ctx.beginPath();
-				that.canvasData.ctx.moveTo(coors.x, coors.y);
-				this.isDrawing = true;
 			},
 			mousemove: function (coors, that) {
 				if(this.isDrawing === true) {
