@@ -6,6 +6,7 @@ var cBoard = new Backbone.Marionette.Application();
 cBoard.addRegions({
 	header: '#header',
 	canvas: '#canvas',
+	map: '#map',
 	players: '#players'
 });
 

@@ -19,6 +19,44 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 
 	// Layout Canvas View
 	// ------------------
+	Layout.Map = Backbone.Marionette.ItemView.extend({
+		tagName: 'div',
+		template: JST['private/templates/map.ejs'],
+
+		initialize: function() {
+
+			var that = this;
+
+			that.getLocation();
+		},
+
+		onShow: function() {
+
+			var that = this,
+				canvas = cBoard.canvas.currentView,
+				$canvas = canvas.$el
+				;
+
+			that.$el.height($canvas.innerHeight());
+			that.$el.width($canvas.innerWidth());
+		},
+
+		getLocation: function() {
+			
+			var that = this;
+			
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(that.showPosition);
+			}
+		},
+
+		showPosition: function(position) {
+			console.log(position.coords);
+		}
+	});
+
+	// Layout Canvas View
+	// ------------------
 	Layout.Canvas = Backbone.Marionette.ItemView.extend({
 		tagName: 'canvas',
 		template: JST['private/templates/canvas.ejs'],
@@ -46,10 +84,14 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 
 		onShow: function() {
 
-			var that = this;
+			var that = this,
+				map = new cBoard.Layout.Map({})
+				;
 
 			that.canvasLoad();
 			that.canvasClear();
+
+			cBoard.map.show(map);
 		},
 
 		canvasLoad: function() {

@@ -8,7 +8,13 @@ return __p
 
 this["JST"]["private/templates/header.ejs"] = function(data) {
 var __t, __p = '', __e = _.escape;
-__p += '<div class=\'pure-menu pure-menu-open pure-menu-horizontal\'>\n\t<ul>\n\t\t<li class=\'pull-right canvas-clear\'>\n\t\t\t<a href=\'javascript:;\'>\n\t\t\t\t<i class=\'fa fa-eraser\'></i> Clear\n\t\t\t</a>\n\t\t</li>\n\t</ul>\n</div>\n';
+__p += '<div class=\'pure-menu pure-menu-open pure-menu-horizontal\'>\r\n\t<ul>\r\n\t\t<li class=\'pull-right canvas-clear\'>\r\n\t\t\t<a href=\'javascript:;\'>\r\n\t\t\t\t<i class=\'fa fa-eraser\'></i> Clear\r\n\t\t\t</a>\r\n\t\t</li>\r\n\t</ul>\r\n</div>\r\n';
+return __p
+};
+
+this["JST"]["private/templates/map.ejs"] = function(data) {
+var __t, __p = '', __e = _.escape;
+__p += '\n';
 return __p
 };
 
@@ -26,7 +32,7 @@ this["JST"]["private/templates/playerItemMarkerView.ejs"] = function(data) {
 var __t, __p = '', __e = _.escape;
 __p += '<span class=\'number\'>' +
 __e( data.number ) +
-'</span>\n';
+'</span>\r\n';
 return __p
 };
 
@@ -34,9 +40,9 @@ this["JST"]["private/templates/playerItemView.ejs"] = function(data) {
 var __t, __p = '', __e = _.escape;
 __p += '<span class=\'number\'>' +
 __e( data.number ) +
-'</span>\n<span class=\'name\'>' +
+'</span>\r\n<span class=\'name\'>' +
 __e( data.name ) +
-'</span>\n';
+'</span>\r\n';
 return __p
 };
 
