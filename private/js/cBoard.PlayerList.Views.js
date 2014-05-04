@@ -25,7 +25,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 
 		modelEvents: {},
 
-		edit: function(evt) {
+		edit: function() {
 
 			var that = this;
 
@@ -33,8 +33,40 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		},
 
 		attach: function(evt) {
+
+			var that = this,
+				hasClass = that.$el.hasClass('attaching')
+				;
+
+			if (cBoard.attaching) {
+				cBoard.attaching.$el.removeClass('attaching');
+				cBoard.attaching = null;
+			}
+
+			if (!hasClass) {
+				that.$el.addClass('attaching');
+				cBoard.attaching = that;
+			}
+		
+			// don't fire the 'click': 'edit' binding
 			evt.stopPropagation();
 		}
+	});
+
+	Views.ItemMarkerView = Marionette.ItemView.extend({
+		tagName: 'li',
+		className: 'clearfix',
+		template: JST['private/templates/playerItemMarkerView.ejs'],
+
+		events: {
+			'click': 'detach',
+		},
+
+		initialize: function() {},
+
+		modelEvents: {},
+
+		detach: function() {}
 	});
 
 	Views.ItemEdit = Marionette.ItemView.extend({
@@ -151,7 +183,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 			that.collection.fetch();
 
 			that.$('.players').slimScroll({
-				height: scrollHeight
+				height: +scrollHeight
 			});
 		},
 
