@@ -5,19 +5,10 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
-			jade: {
-				files: [
-					'views/**/*.jade'
-				],
-				options: {
-					livereload: true,
-				},
-			},
 			js: {
 				files: [
 					'Gruntfile.js',
 					'*.js',
-					'routes/*.js',
 					'private/js/**'
 				],
 				tasks: ['jshint', 'uglify'],
@@ -62,7 +53,6 @@ module.exports = function(grunt) {
 			all: [
 				'Gruntfile.js',
 				'*.js',
-				'routes/*.js',
 				'private/js/**'
 			]
 		},
@@ -74,14 +64,14 @@ module.exports = function(grunt) {
 					}
 				},
 				files: {
-					'public/js/templates.js': ['private/templates/**/*.ejs']
+					'js/templates.js': ['private/templates/**/*.ejs']
 				}
 			}
 		},
 		less: {
 			dist: {
 				files: {
-					'public/css/main.min.css': [
+					'css/main.min.css': [
 						'private/bower_components/pure/pure.css',
 						'private/bower_components/font-awesome/css/font-awesome.css',
 						'private/less/app.less'
@@ -92,7 +82,7 @@ module.exports = function(grunt) {
 					outputSourceFiles: true,
 					sourceMap: true,
 					sourceMapBasepath: '../../',
-					sourceMapFilename: 'public/css/main.min.css.map',
+					sourceMapFilename: 'css/main.min.css.map',
 					sourceMapURL: '/css/main.min.css.map'
 				}
 			}
@@ -100,7 +90,7 @@ module.exports = function(grunt) {
 		uglify: {
 			dist: {
 				files: {
-					'public/js/scripts.min.js': [
+					'js/scripts.min.js': [
 						'private/bower_components/jquery/dist/jquery.js',
 						'private/bower_components/underscore/underscore.js',
 						'private/bower_components/backbone/backbone.js',
@@ -119,7 +109,7 @@ module.exports = function(grunt) {
 				options: {
 					sourceMap: true,
 					sourceMapIncludeSources: true,
-					sourceMapName: 'public/js/scripts.min.js.map'
+					sourceMapName: 'js/scripts.min.js.map'
 				}
 			}
 		},
@@ -129,31 +119,8 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'private/img/',
 					src: '**/*',
-					dest: 'public/img/'
+					dest: 'img/'
 				}]
-			}
-		},
-		nodemon: {
-			dev: {
-				script: 'server.js',
-				options: {
-					file: 'server.js',
-					args: [],
-					ignoredFiles: ['public/**'],
-					watchedExtensions: ['js'],
-					nodeArgs: ['--debug'],
-					delayTime: 0,
-					env: {
-						PORT: 3000
-					},
-					cwd: __dirname
-				}
-			}
-		},
-		concurrent: {
-			tasks: ['nodemon', 'watch'],
-			options: {
-				logConcurrentOutput: true
 			}
 		},
 		mochaTest: {
@@ -168,10 +135,6 @@ module.exports = function(grunt) {
 				src : '.env',
 				options : {
 					add : {
-						NODE_ENV : 'production',
-						MONGOHQ_URL : 'mongodb://localhost:27017'
-					},
-					replace : {
 						NODE_ENV : 'production'
 					}
 				}
@@ -180,10 +143,6 @@ module.exports = function(grunt) {
 				src : '.env',
 				options : {
 					add : {
-						NODE_ENV : 'development',
-						MONGOHQ_URL : 'mongodb://localhost:27017'
-					},
-					replace : {
 						NODE_ENV : 'development'
 					}
 				}
@@ -192,11 +151,7 @@ module.exports = function(grunt) {
 				src : '.env',
 				options : {
 					add : {
-						NODE_ENV : 'n2o',
-						MONGOHQ_URL : 'mongodb://localhost:27017'
-					},
-					replace : {
-						NODE_ENV : 'n2o',
+						NODE_ENV : 'n2o'
 					}
 				}
 			},
@@ -204,11 +159,7 @@ module.exports = function(grunt) {
 				src : '.env',
 				options : {
 					add : {
-						NODE_ENV : 'test',
-						MONGOHQ_URL : 'mongodb://test_user:test_pass@localhost:27017/test_db'
-					},
-					replace : {
-						NODE_ENV : 'test',
+						NODE_ENV : 'test'
 					}
 				}
 			}
@@ -220,7 +171,7 @@ module.exports = function(grunt) {
 				src: [
 					'private/bower_components/font-awesome/fonts/*',
 				],
-				dest: 'public/fonts/'
+				dest: 'fonts/'
 			}
 		}
 	});
@@ -242,7 +193,7 @@ module.exports = function(grunt) {
 	grunt.option('force', true);
 
 	grunt.registerTask('createDefaultTemplate', function () {
-		grunt.file.write('public/js/templates.js', 'this.JST = this.JST || {};');
+		grunt.file.write('js/templates.js', 'this.JST = this.JST || {};');
 	});
 
 	//Default task(s).
@@ -264,7 +215,7 @@ module.exports = function(grunt) {
 		'uglify',
 		'imagemin',
 		'copy:fonts',
-		'concurrent'
+		'watch'
 	]);
 
 	grunt.registerTask('dev', [
@@ -275,7 +226,7 @@ module.exports = function(grunt) {
 		'uglify',
 		'imagemin',
 		'copy:fonts',
-		'concurrent'
+		'watch'
 	]);
 
 	//Test task.
