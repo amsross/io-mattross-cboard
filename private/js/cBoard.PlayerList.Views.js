@@ -61,7 +61,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 	});
 
 	Views.ItemMarkerView = Marionette.ItemView.extend({
-		tagName: 'li',
+		tagName: 'div',
 		className: 'clearfix playerItemMarkerView',
 		template: JST['private/templates/playerItemMarkerView.ejs'],
 
@@ -69,11 +69,19 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 			'click': 'detach',
 		},
 
-		initialize: function() {},
-
 		modelEvents: {},
 
-		detach: function() {}
+		onRender: function() {
+
+			var that = this;
+
+			that.$el.css('top', that.options.coors.y + 'px');
+			that.$el.css('left', that.options.coors.x + 'px');
+		},
+
+		detach: function() {
+			this.close();
+		}
 	});
 
 	Views.ItemEdit = Marionette.ItemView.extend({

@@ -149,7 +149,18 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 		canvasDrawer: {
 			isDrawing: false,
 			touchstart: function (coors, that) {
-				this.mousedown(coors, that);
+				
+				if (cBoard.attaching) {
+					cBoard.attaching.$el.removeClass('attaching');
+					if (cBoard.attaching.marker) {
+						cBoard.attaching.marker.close();
+					}
+					cBoard.attaching.marker = new cBoard.PlayerList.Views.ItemMarkerView({model: cBoard.attaching.model, coors: coors});
+					that.canvasData.objContainer.append(cBoard.attaching.marker.render().el);
+					cBoard.attaching = null;
+				} else {
+					this.mousedown(coors, that);
+				}
 			},
 			touchmove: function (coors, that) {
 				this.mousemove(coors, that);
