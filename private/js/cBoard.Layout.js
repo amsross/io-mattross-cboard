@@ -1,4 +1,4 @@
-/*global cBoard, JST */
+/*global cBoard, JST, google */
 'use strict';
 
 cBoard.module('Layout', function (Layout, cBoard, Backbone) {
@@ -8,12 +8,59 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 	Layout.Header = Backbone.Marionette.ItemView.extend({
 		template: JST['private/templates/header.ejs'],
 
+		ui: {
+			mapSet: '.map-set',
+			mapEdit: '.map-edit',
+			mapLocate: '.map-locate',
+			mapRotateR: '.map-rotate-r',
+			mapRotateL: '.map-rotate-l'
+		},
+
 		events: {
-			'click .canvas-clear': 'canvasClear'
+			'click .canvas-clear': 'canvasClear',
+			'click .map-toggle': 'toggleEdit',
+			'click .map-locate-gps': 'locateGps',
+			'click .map-locate-default': 'locateDefault',
+			'click .map-rotate-r': 'rotateRight',
+			'click .map-rotate-l': 'rotateLeft'
+		},
+
+		onShow: function() {
+			
+			var that = this;
+
+			if (!navigator.geolocation) {
+				that.ui.mapLocate.remove();
+			}
 		},
 
 		canvasClear: function() {
 			cBoard.vent.trigger('canvas:clear');
+		},
+
+		toggleEdit: function() {
+			$('body').toggleClass('map-editing');
+		},
+
+		locateDefault: function() {
+			cBoard.map.currentView.resetLocation();
+		},
+
+		locateGps: function() {
+			cBoard.map.currentView.getLocation();
+		},
+
+		rotateRight: function() {
+
+			var map = cBoard.map.currentView.map;
+
+			map.setHeading((map.getHeading()||0) - 90);
+		},
+		rotateLeft: function() {
+
+			var map = cBoard.map.currentView.map;
+
+			map.setHeading((map.getHeading()||0) + 90);
 		}
 	});
 
@@ -27,11 +74,19 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 
 			var that = this;
 
-			that.getLocation();
+			that.mapOptions = {
+				disableDefaultUI: true,
+				center: new google.maps.LatLng(28.6386232, -80.8238037),
+				mapTypeId: google.maps.MapTypeId.SATELLITE,
+				tilt: 45,
+				zoom: 20
+			};
+
+			that.showMap();
 		},
 
 		onShow: function() {
-
+			
 			var that = this,
 				canvas = cBoard.canvas.currentView,
 				$canvas = canvas.$el
@@ -41,17 +96,37 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			that.$el.width($canvas.innerWidth());
 		},
 
+		resetLocation: function() {
+			this.initialize();
+		},
+
 		getLocation: function() {
 			
 			var that = this;
 			
 			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(that.showPosition);
+				navigator.geolocation.getCurrentPosition(function(position) {
+					that.showPosition(position, that);
+				});
+			} else {
+				that.showMap();
 			}
 		},
 
-		showPosition: function(position) {
-			console.log(position.coords);
+		showPosition: function(position, self) {
+
+			var that = self;
+
+			that.mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			
+			that.showMap();
+		},
+
+		showMap: function() {
+
+			var that = this;
+
+			that.map = new google.maps.Map(that.el, that.mapOptions);
 		}
 	});
 
@@ -117,11 +192,11 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			that.canvasData.ctx.lineWidth = that.canvasData.radius;
 			that.canvasData.ctx.strokeStyle = that.canvasData.strokeStyle;
 
-			that.canvasData.ctx.fillRect(0, 0, that.canvasData.canvas.width, that.canvasData.canvas.height);
+			//that.canvasData.ctx.fillRect(0, 0, that.canvasData.canvas.width, that.canvasData.canvas.height);
 
 			that.img = new Image();
 
-			that.img.src = 'img/field.jpg';
+			//that.img.src = 'img/field.jpg';
 
 			that.img.onload	= function() {
 

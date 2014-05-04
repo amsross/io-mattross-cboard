@@ -42,19 +42,54 @@ body {
 			width: 100%;
 		}
 	}
+	.map-edit {
+		display: inline-block;
+	}
+	.map-set,
+	.map-locate,
+	.map-rotate {
+		display: none;
+	}
+}
+
+.map-editing {
+	#header {
+		.map-set,
+		.map-locate,
+		.map-rotate {
+			display: inline-block;
+		}
+		.map-locate,
+		.map-rotate {
+			a {
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+		}
+		.map-edit {
+			display: none;
+		}
+	}
+	#map {
+		z-index: 2000;
+	}
+	#canvas {
+		z-index: 1000;
+	}
 }
 
 #map {
 	height: 0;
 	position: relative;
+	z-index: 1000;
 }
 
 #canvas {
 	line-height: 0;
 	padding: 0;
 	position: relative;
+	z-index: 2000;
 	canvas {
-		background-color: #fff;
 		width: 100%;
 	}
 	.playerItemMarkerView {
