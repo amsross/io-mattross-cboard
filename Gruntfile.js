@@ -83,7 +83,7 @@ module.exports = function(grunt) {
 					sourceMap: true,
 					sourceMapBasepath: '../../',
 					sourceMapFilename: 'css/main.min.css.map',
-					sourceMapURL: '/css/main.min.css.map'
+					sourceMapURL: 'main.min.css.map'
 				}
 			}
 		},

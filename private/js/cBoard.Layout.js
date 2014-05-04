@@ -79,7 +79,7 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 
 			that.img = new Image();
 
-			that.img.src = '/img/field.jpg';
+			that.img.src = 'img/field.jpg';
 
 			that.img.onload	= function() {
 
