@@ -10,7 +10,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 	// that are made to the item, including marking completed.
 	Views.ItemView = Marionette.ItemView.extend({
 		tagName: 'li',
-		className: 'clearfix pure-u-1',
+		className: 'clearfix playerItemView pure-u-1',
 		template: JST['private/templates/playerItemView.ejs'],
 
 		ui: {
@@ -24,6 +24,13 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		},
 
 		modelEvents: {},
+		
+		initialize: function() {
+			
+			var that = this;
+
+			that.marker = null;
+		},
 
 		edit: function() {
 
@@ -55,7 +62,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 
 	Views.ItemMarkerView = Marionette.ItemView.extend({
 		tagName: 'li',
-		className: 'clearfix',
+		className: 'clearfix playerItemMarkerView',
 		template: JST['private/templates/playerItemMarkerView.ejs'],
 
 		events: {
@@ -71,7 +78,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 
 	Views.ItemEdit = Marionette.ItemView.extend({
 		tagName: 'form',
-		className: 'clearfix pure-u-1 pure-form',
+		className: 'clearfix playerItemEdit pure-u-1 pure-form',
 		template: JST['private/templates/playerItemEdit.ejs'],
 
 		ui: {
