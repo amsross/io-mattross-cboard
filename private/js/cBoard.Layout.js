@@ -76,7 +76,7 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 
 			that.mapOptions = {
 				disableDefaultUI: true,
-				center: new google.maps.LatLng(28.6386232, -80.8238037),
+				center: new google.maps.LatLng(39.85026448084963, -74.92485770796928),
 				mapTypeId: google.maps.MapTypeId.SATELLITE,
 				tilt: 45,
 				zoom: 20
@@ -167,6 +167,23 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			that.canvasClear();
 
 			cBoard.map.show(map);
+		},
+
+		markerAttach: function(coors) {
+			
+			var that = this;
+			
+			cBoard.attaching.$el.removeClass('attaching');
+			
+			console.log(cBoard.attaching);
+			console.log(cBoard.attaching.marker);
+			if (cBoard.attaching.marker) {
+				cBoard.attaching.marker.close();
+			}
+			
+			cBoard.attaching.marker = new cBoard.PlayerList.Views.ItemMarkerView({model: cBoard.attaching.model, coors: coors});
+			that.canvasData.objContainer.append(cBoard.attaching.marker.render().el);
+			cBoard.attaching = null;
 		},
 
 		canvasLoad: function() {
@@ -277,13 +294,7 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			mousedown: function (coors, that) {
 				
 				if (cBoard.attaching) {
-					cBoard.attaching.$el.removeClass('attaching');
-					if (cBoard.attaching.marker) {
-						cBoard.attaching.marker.close();
-					}
-					cBoard.attaching.marker = new cBoard.PlayerList.Views.ItemMarkerView({model: cBoard.attaching.model, coors: coors});
-					that.canvasData.objContainer.append(cBoard.attaching.marker.render().el);
-					cBoard.attaching = null;
+					that.markerAttach(coors);
 				} else {
 					that.canvasData.ctx.beginPath();
 					that.canvasData.ctx.moveTo(coors.x, coors.y);
