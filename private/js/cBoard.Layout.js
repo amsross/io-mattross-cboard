@@ -26,7 +26,7 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 		},
 
 		onShow: function() {
-			
+
 			var that = this;
 
 			if (!navigator.geolocation) {
@@ -86,7 +86,7 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 		},
 
 		onShow: function() {
-			
+
 			var that = this,
 				canvas = cBoard.canvas.currentView,
 				$canvas = canvas.$el
@@ -101,9 +101,9 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 		},
 
 		getLocation: function() {
-			
+
 			var that = this;
-			
+
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					that.showPosition(position, that);
@@ -118,7 +118,7 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			var that = self;
 
 			that.mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			
+
 			that.showMap();
 		},
 
@@ -172,15 +172,15 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 		},
 
 		markerAttach: function(coors) {
-			
+
 			var that = this;
-			
+
 			cBoard.attaching.$el.removeClass('attaching');
-			
+
 			if (cBoard.attaching.marker) {
 				cBoard.attaching.marker.close();
 			}
-			
+
 			cBoard.attaching.marker = new cBoard.PlayerList.Views.ItemMarkerView({model: cBoard.attaching.model, coors: coors});
 			that.canvasData.objContainer.append(cBoard.attaching.marker.render().el);
 			cBoard.attaching = null;
@@ -253,7 +253,7 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 				this.mouseup(coors, that);
 			},
 			mousedown: function (coors, that) {
-				
+
 				if (cBoard.attaching) {
 					that.markerAttach(coors);
 				} else {

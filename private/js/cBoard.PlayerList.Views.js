@@ -24,7 +24,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 		},
 
 		initialize: function() {
-			
+
 			var that = this;
 
 			that.marker = null;
@@ -52,7 +52,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 				that.$el.addClass('attaching');
 				cBoard.attaching = that;
 			}
-		
+
 			// don't fire the 'click': 'edit' binding
 			evt.stopPropagation();
 		}
@@ -109,7 +109,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 			'change .name': 'change',
 			'change .number': 'change',
 		},
-		
+
 		blur: function(evt) {
 
 			var that = this,
@@ -123,7 +123,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 				$target.val(that.model.get('number'));
 			}
 		},
-		
+
 		focus: function(evt) {
 
 			var that = this,
@@ -153,7 +153,7 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 			var that = this,
 				timeout = null
 				;
-			
+
 			that.$('input').blur();
 
 			timeout = window.setTimeout(function() {
