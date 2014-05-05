@@ -155,6 +155,8 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 				strokeStyle: '#000000',
 				radius: 1
 			};
+
+			that.listenTo(cBoard.vent, 'canvas:clear', that.canvasClear);
 		},
 
 		onShow: function() {
@@ -175,8 +177,6 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			
 			cBoard.attaching.$el.removeClass('attaching');
 			
-			console.log(cBoard.attaching);
-			console.log(cBoard.attaching.marker);
 			if (cBoard.attaching.marker) {
 				cBoard.attaching.marker.close();
 			}
@@ -208,45 +208,6 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 			that.canvasData.ctx.lineCap = 'round';
 			that.canvasData.ctx.lineWidth = that.canvasData.radius;
 			that.canvasData.ctx.strokeStyle = that.canvasData.strokeStyle;
-
-			//that.canvasData.ctx.fillRect(0, 0, that.canvasData.canvas.width, that.canvasData.canvas.height);
-
-			that.img = new Image();
-
-			//that.img.src = 'img/field.jpg';
-
-			that.img.onload	= function() {
-
-				var
-					iImgHeight = that.canvasData.canvas.height,
-					iImgWidth = that.canvasData.canvas.width,
-					offsetLeft = 0,
-					offsetTop = 0,
-					resize_by_width = false,
-					resize_ratio = 1
-					;
-
-				if ( that.img.width > that.canvasData.canvas.width || that.img.height > that.canvasData.canvas.height ) {
-					resize_by_width = ((that.img.width / that.canvasData.canvas.width) > (that.img.height / that.canvasData.canvas.height));
-					resize_ratio = (resize_by_width ? that.canvasData.canvas.width / that.img.width : that.canvasData.canvas.height / that.img.height);
-
-					iImgWidth = that.img.width * resize_ratio;
-					iImgHeight = that.img.height * resize_ratio;
-				} else {
-					iImgWidth = that.img.width;
-					iImgHeight = that.img.height;
-				}
-
-				if (that.canvasData.canvas.height > iImgHeight) {
-					that.canvasData.canvas.height = iImgHeight;
-				}
-
-				offsetLeft = (that.canvasData.canvas.width - iImgWidth) / 2;
-				offsetTop = (that.canvasData.canvas.height - iImgHeight) / 2;
-				that.canvasData.ctx.drawImage(that.img, offsetLeft, offsetTop, iImgWidth, iImgHeight );
-
-				delete that.img;
-			};
 		},
 
 		canvasDraw: function(e) {

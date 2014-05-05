@@ -17,6 +17,4 @@ cBoard.on('initialize:after', function () {
 
 // Application Event Handlers
 // --------------------------
-cBoard.vent.on('canvas:clear', function () {
-	cBoard.canvas.currentView.canvasClear();
-});
+cBoard.vent.on('canvas:clear', function () {});
