@@ -23,8 +23,6 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 			'click .number': 'attach',
 		},
 
-		modelEvents: {},
-		
 		initialize: function() {
 			
 			var that = this;
@@ -69,7 +67,12 @@ cBoard.module('PlayerList.Views', function (Views, cBoard, Backbone, Marionette)
 			'click': 'detach',
 		},
 
-		modelEvents: {},
+		initialize: function() {
+
+			var that = this;
+
+			that.listenTo(cBoard.vent, 'canvas:clear', that.detach);
+		},
 
 		onRender: function() {
 
