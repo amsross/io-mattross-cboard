@@ -14,7 +14,7 @@ return __p
 
 this["JST"]["private/templates/map.ejs"] = function(data) {
 var __t, __p = '', __e = _.escape;
-__p += '\n';
+__p += '\r\n';
 return __p
 };
 
