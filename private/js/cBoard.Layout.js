@@ -64,7 +64,7 @@ cBoard.module('Layout', function (Layout, cBoard, Backbone) {
 		}
 	});
 
-	// Layout Canvas View
+	// Layout Map View
 	// ------------------
 	Layout.Map = Backbone.Marionette.ItemView.extend({
 		tagName: 'div',
